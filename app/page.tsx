@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SpotsMap } from "@/components/spots-map";
+import { SurfMapShell } from "@/components/surf-map-shell";
 import { SpotCard } from "@/components/spot-card";
 import { getSurfSpots } from "@/lib/surf-data";
 
@@ -23,7 +23,7 @@ export default function HomePage() {
         </Link>
       </header>
 
-      <SpotsMap spots={spots} />
+      <SurfMapShell />
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {spots.map((spot) => (

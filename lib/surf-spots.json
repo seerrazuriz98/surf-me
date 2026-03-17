@@ -1,0 +1,20 @@
+[
+  {
+    "id": "pichilemu-punta-de-lobos",
+    "name": "Punta de Lobos",
+    "latitude": -34.412,
+    "longitude": -72.035
+  },
+  {
+    "id": "arica-el-gringo",
+    "name": "El Gringo",
+    "latitude": -18.483,
+    "longitude": -70.323
+  },
+  {
+    "id": "constitucion-los-gringos",
+    "name": "Los Gringos",
+    "latitude": -35.333,
+    "longitude": -72.41
+  }
+]
