@@ -19,8 +19,8 @@ type MapSpot = {
 const mapSpots = surfSpots as MapSpot[];
 const worldCenter: [number, number] = [0, 0];
 const spotMarkerIcon = L.divIcon({
-  className: "",
-  html: '<span style="pointer-events:none;display:block;width:12px;height:12px;border-radius:9999px;background:#06b6d4;border:2px solid #ffffff;box-shadow:0 1px 4px rgba(2,6,23,.4);"></span>',
+  className: "surf-map-marker",
+  html: '<span class="surf-map-marker-dot"></span>',
   iconSize: [12, 12],
   iconAnchor: [6, 6],
 });
