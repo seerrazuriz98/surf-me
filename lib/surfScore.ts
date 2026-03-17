@@ -16,6 +16,7 @@ function clampScore(value: number): number {
 }
 
 function getWaveHeightScore(waveHeight: number): number {
+  // Mid-size surf tends to be the most broadly rideable, while tiny or very large swell lowers quality.
   if (waveHeight >= 4 && waveHeight <= 8) return 3;
   if ((waveHeight >= 2 && waveHeight < 4) || (waveHeight > 8 && waveHeight <= 10)) return 2;
   if ((waveHeight >= 1 && waveHeight < 2) || (waveHeight > 10 && waveHeight <= 12)) return 1;
@@ -32,6 +33,8 @@ function getWindSpeedScore(windSpeed: number): number {
 function getWindDirectionScore(windDirection: string): number {
   const normalized = windDirection.trim().toUpperCase();
 
+  // For west-facing breaks (common in this dataset), easterly flow is generally offshore,
+  // northerly/southerly flow is more cross-shore, and westerly flow is mostly onshore.
   if (["E", "ENE", "ESE", "NE", "SE", "NNE", "SSE"].includes(normalized)) return 2;
   if (["N", "S", "NNW", "SSW", "NW", "SW"].includes(normalized)) return 1;
   if (["W", "WNW", "WSW"].includes(normalized)) return -2;
@@ -46,6 +49,7 @@ export function getSurfQualityLabel(score: number): SurfQualityLabel {
 }
 
 export function calculateSurfScore({ waveHeight, windSpeed, windDirection }: SurfScoreInput): SurfScoreResult {
+  // Base score keeps realistic combinations above the minimum before environmental adjustments.
   const rawScore = 2 + getWaveHeightScore(waveHeight) + getWindSpeedScore(windSpeed) + getWindDirectionScore(windDirection);
   const score = clampScore(rawScore);
 
