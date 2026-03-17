@@ -1,7 +1,5 @@
 # surf-me
 
-## surf-me
-
 A Next.js 15 + TypeScript portfolio-ready starter for a personalized surf forecast tracker.
 
 ### Stack
