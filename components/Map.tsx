@@ -17,7 +17,7 @@ type MapSpot = {
 };
 
 const mapSpots = surfSpots as MapSpot[];
-const worldCenter: [number, number] = [0, 0];
+const defaultMapCenter: [number, number] = [0, 0];
 const spotMarkerIcon = L.divIcon({
   className: "surf-map-marker",
   html: '<span class="surf-map-marker-dot"></span>',
@@ -34,7 +34,7 @@ export const SurfMap = memo(function SurfMap() {
       <p className="mt-2 text-sm text-slate-600">Tap a marker to open the surf spot details.</p>
 
       <div className="mt-4 h-[320px] w-full overflow-hidden rounded-lg border border-slate-200 sm:h-[420px]">
-        <MapContainer center={worldCenter} zoom={2} minZoom={2} scrollWheelZoom className="h-full w-full" preferCanvas worldCopyJump>
+        <MapContainer center={defaultMapCenter} zoom={2} minZoom={2} scrollWheelZoom className="h-full w-full" preferCanvas worldCopyJump>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
