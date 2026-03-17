@@ -3,6 +3,18 @@ import type { WaveForecast } from "@/types/surf";
 const OPEN_METEO_MARINE_API = "https://marine-api.open-meteo.com/v1/marine";
 const CACHE_TTL_MS = 10 * 60 * 1000;
 
+export type SurfForecastErrorCode = "VALIDATION_ERROR" | "UPSTREAM_ERROR" | "INVALID_RESPONSE";
+
+export class SurfForecastError extends Error {
+  code: SurfForecastErrorCode;
+
+  constructor(code: SurfForecastErrorCode, message: string) {
+    super(message);
+    this.code = code;
+    this.name = "SurfForecastError";
+  }
+}
+
 type ForecastCacheEntry = {
   expiresAt: number;
   data: WaveForecast[];
@@ -47,7 +59,7 @@ function normalizeForecast(data: MarineApiResponse): WaveForecast[] {
   const hourly = data.hourly;
 
   if (!hourly?.time || !hourly.wave_height || !hourly.swell_wave_direction || !hourly.wind_speed || !hourly.wind_direction) {
-    throw new Error("Marine API response is missing required hourly fields");
+    throw new SurfForecastError("INVALID_RESPONSE", "Marine API response is missing required hourly fields");
   }
 
   const length = Math.min(
@@ -91,7 +103,7 @@ function normalizeForecast(data: MarineApiResponse): WaveForecast[] {
 
 export async function getSurfForecast(lat: number, lon: number): Promise<WaveForecast[]> {
   if (!isValidCoordinate(lat) || !isValidCoordinate(lon)) {
-    throw new Error("Latitude and longitude must be valid numbers");
+    throw new SurfForecastError("VALIDATION_ERROR", "Latitude and longitude must be valid numbers");
   }
 
   const cacheKey = toCacheKey(lat, lon);
@@ -118,11 +130,11 @@ export async function getSurfForecast(lat: number, lon: number): Promise<WaveFor
       },
     });
   } catch (error) {
-    throw new Error(`Failed to fetch marine forecast: ${error instanceof Error ? error.message : "unknown error"}`);
+    throw new SurfForecastError("UPSTREAM_ERROR", `Failed to fetch marine forecast: ${error instanceof Error ? error.message : "unknown error"}`);
   }
 
   if (!response.ok) {
-    throw new Error(`Marine API request failed with status ${response.status}`);
+    throw new SurfForecastError("UPSTREAM_ERROR", `Marine API request failed with status ${response.status}`);
   }
 
   let payload: MarineApiResponse;
@@ -130,7 +142,7 @@ export async function getSurfForecast(lat: number, lon: number): Promise<WaveFor
   try {
     payload = (await response.json()) as MarineApiResponse;
   } catch {
-    throw new Error("Marine API returned invalid JSON");
+    throw new SurfForecastError("INVALID_RESPONSE", "Marine API returned invalid JSON");
   }
 
   const normalized = normalizeForecast(payload);
