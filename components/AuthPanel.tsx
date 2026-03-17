@@ -17,6 +17,7 @@ export function AuthPanel() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSessionLoading, setIsSessionLoading] = useState(true);
 
   useEffect(() => {
     if (!supabase) {
@@ -25,12 +26,14 @@ export function AuthPanel() {
 
     void supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
+      setIsSessionLoading(false);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, currentSession) => {
       setSession(currentSession);
+      setIsSessionLoading(false);
     });
 
     return () => {
@@ -74,9 +77,17 @@ export function AuthPanel() {
   }
 
   return (
-    <section className="mb-8 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+    <section className="glass-card mb-8 rounded-2xl p-4 sm:p-5">
       <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-slate-500">Account</h2>
-      {session ? (
+      {isSessionLoading ? (
+        <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_1fr_auto_auto]">
+          <div className="skeleton h-10 rounded-md" />
+          <div className="skeleton h-10 rounded-md" />
+          <div className="skeleton h-10 rounded-lg" />
+          <div className="skeleton h-10 rounded-lg" />
+        </div>
+      ) : null}
+      {!isSessionLoading && session ? (
         <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-slate-700">Signed in as {session.user.email}</p>
           <button
@@ -88,7 +99,8 @@ export function AuthPanel() {
             Logout
           </button>
         </div>
-      ) : (
+      ) : null}
+      {!isSessionLoading && !session ? (
         <form
           className="mt-3 grid gap-3 sm:grid-cols-[1fr_1fr_auto_auto]"
           onSubmit={(event) => {
@@ -128,7 +140,7 @@ export function AuthPanel() {
             Signup
           </button>
         </form>
-      )}
+      ) : null}
       {message ? <p className="mt-3 text-sm text-slate-600">{message}</p> : null}
     </section>
   );

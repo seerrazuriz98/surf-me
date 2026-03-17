@@ -29,11 +29,11 @@ export const SurfMap = memo(function SurfMap() {
   const router = useRouter();
 
   return (
-    <section className="mb-10 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+    <section className="glass-card mb-10 rounded-2xl p-4 sm:p-6">
       <h2 className="text-xl font-semibold text-slate-900">Surf spots map</h2>
-      <p className="mt-2 text-sm text-slate-600">Tap a marker to open the surf spot details.</p>
+      <p className="mt-2 text-sm text-slate-700">Tap a marker to open the surf spot details.</p>
 
-      <div className="mt-4 h-[320px] w-full overflow-hidden rounded-lg border border-slate-200 sm:h-[420px]">
+      <div className="mt-4 h-[320px] w-full overflow-hidden rounded-xl border border-white/70 sm:h-[420px]">
         <MapContainer center={defaultMapCenter} zoom={2} minZoom={2} scrollWheelZoom className="h-full w-full" preferCanvas worldCopyJump>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
