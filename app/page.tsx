@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AuthPanel } from "@/components/AuthPanel";
 import { SurfMapShell } from "@/components/surf-map-shell";
 import { SpotCard } from "@/components/SpotCard";
 import { getSurfSpots } from "@/lib/surf-data";
@@ -22,6 +23,8 @@ export default function HomePage() {
           Go to favorites
         </Link>
       </header>
+
+      <AuthPanel />
 
       <SurfMapShell />
 

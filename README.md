@@ -25,3 +25,12 @@ npm run lint
 npm run build
 npm run start
 ```
+
+### Supabase auth
+
+Set these environment variables to enable email signup/login and session persistence:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+```
