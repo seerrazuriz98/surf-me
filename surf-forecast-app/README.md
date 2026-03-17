@@ -1,4 +1,4 @@
-# surf-me
+# surf-forecast-app
 
 ## surf-forecast-app
 
