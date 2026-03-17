@@ -14,10 +14,8 @@ export function SpotCard({ spot }: SpotCardProps) {
           {spot.difficulty}
         </span>
       </div>
-      <p className="mt-2 text-sm text-slate-600">{spot.region}</p>
-      <p className="mt-3 text-sm text-slate-700">
-        Best swell: <strong>{spot.bestSwell}</strong>
-      </p>
+      <p className="mt-2 text-sm text-slate-600">{spot.country}</p>
+      <p className="mt-3 text-sm text-slate-700">{spot.description}</p>
       <Link
         href={`/spots/${spot.id}`}
         className="mt-4 inline-flex text-sm font-medium text-cyan-700 hover:text-cyan-900"

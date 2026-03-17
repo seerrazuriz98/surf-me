@@ -1,6 +1,6 @@
-# surf-forecast-app
+# surf-me
 
-## surf-forecast-app
+## surf-me
 
 A Next.js 15 + TypeScript portfolio-ready starter for a personalized surf forecast tracker.
 

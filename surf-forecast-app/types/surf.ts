@@ -1,23 +1,27 @@
-export type TideCondition = "low" | "mid" | "high";
+export type SpotId = string;
+export type UserId = string;
 
-export interface Forecast {
-  hour: string;
-  waveHeightFt: number;
-  swellDirection: string;
-  windKts: number;
-  tide: TideCondition;
-}
+export type SurfDifficulty = "Beginner" | "Intermediate" | "Advanced";
 
 export interface SurfSpot {
-  id: string;
+  id: SpotId;
   name: string;
-  region: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-  difficulty: "Beginner" | "Intermediate" | "Advanced";
-  bestSwell: string;
-  isFavorite: boolean;
-  forecast: Forecast[];
+  country: string;
+  latitude: number;
+  longitude: number;
+  difficulty: SurfDifficulty;
+  description: string;
+}
+
+export interface WaveForecast {
+  time: string;
+  waveHeight: number;
+  swellDirection: string;
+  windSpeed: number;
+  windDirection: string;
+}
+
+export interface UserFavorite {
+  userId: UserId;
+  spotId: SpotId;
 }

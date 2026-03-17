@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "surf-forecast-app",
+  title: "surf-me",
   description: "Personalized surf forecast tracker for favorite breaks",
 };
 

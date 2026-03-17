@@ -10,7 +10,7 @@ export default function HomePage() {
     <main className="mx-auto min-h-screen max-w-6xl px-6 py-12">
       <header className="mb-10 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-cyan-700">surf-forecast-app</p>
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-cyan-700">surf-me</p>
           <h1 className="mt-2 text-3xl font-bold text-slate-900 sm:text-4xl">
             Personalized surf forecast tracker
           </h1>

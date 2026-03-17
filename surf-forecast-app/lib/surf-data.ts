@@ -1,48 +1,56 @@
-import type { SurfSpot } from "@/types/surf";
+import type { SurfSpot, UserFavorite, WaveForecast } from "@/types/surf";
 
 const surfSpots: SurfSpot[] = [
   {
     id: "pichilemu-punta-de-lobos",
     name: "Punta de Lobos",
-    region: "Pichilemu, Chile",
-    coordinates: { lat: -34.412, lng: -72.035 },
+    country: "Chile",
+    latitude: -34.412,
+    longitude: -72.035,
     difficulty: "Advanced",
-    bestSwell: "SW",
-    isFavorite: true,
-    forecast: [
-      { hour: "06:00", waveHeightFt: 6.2, swellDirection: "SW", windKts: 10, tide: "low" },
-      { hour: "12:00", waveHeightFt: 7.1, swellDirection: "SW", windKts: 13, tide: "mid" },
-      { hour: "18:00", waveHeightFt: 5.8, swellDirection: "SSW", windKts: 8, tide: "high" },
-    ],
+    description: "Powerful left-hand point break with long walls and heavy sections.",
   },
   {
     id: "arica-el-gringo",
     name: "El Gringo",
-    region: "Arica, Chile",
-    coordinates: { lat: -18.483, lng: -70.323 },
+    country: "Chile",
+    latitude: -18.483,
+    longitude: -70.323,
     difficulty: "Intermediate",
-    bestSwell: "W",
-    isFavorite: false,
-    forecast: [
-      { hour: "06:00", waveHeightFt: 4.3, swellDirection: "W", windKts: 6, tide: "mid" },
-      { hour: "12:00", waveHeightFt: 5.2, swellDirection: "WNW", windKts: 9, tide: "high" },
-      { hour: "18:00", waveHeightFt: 4.7, swellDirection: "W", windKts: 7, tide: "low" },
-    ],
+    description: "Fast reef break with punchy takeoffs and short, hollow rides.",
   },
   {
     id: "constitucion-los-gringos",
     name: "Los Gringos",
-    region: "Constitución, Chile",
-    coordinates: { lat: -35.333, lng: -72.41 },
+    country: "Chile",
+    latitude: -35.333,
+    longitude: -72.41,
     difficulty: "Beginner",
-    bestSwell: "S",
-    isFavorite: true,
-    forecast: [
-      { hour: "06:00", waveHeightFt: 2.8, swellDirection: "S", windKts: 5, tide: "high" },
-      { hour: "12:00", waveHeightFt: 3.4, swellDirection: "SSE", windKts: 11, tide: "mid" },
-      { hour: "18:00", waveHeightFt: 3.1, swellDirection: "S", windKts: 6, tide: "low" },
-    ],
+    description: "Friendly beach break with softer peaks, ideal for progression days.",
   },
+];
+
+const waveForecastBySpotId: Record<string, WaveForecast[]> = {
+  "pichilemu-punta-de-lobos": [
+    { time: "06:00", waveHeight: 6.2, swellDirection: "SW", windSpeed: 10, windDirection: "SE" },
+    { time: "12:00", waveHeight: 7.1, swellDirection: "SW", windSpeed: 13, windDirection: "SSE" },
+    { time: "18:00", waveHeight: 5.8, swellDirection: "SSW", windSpeed: 8, windDirection: "E" },
+  ],
+  "arica-el-gringo": [
+    { time: "06:00", waveHeight: 4.3, swellDirection: "W", windSpeed: 6, windDirection: "S" },
+    { time: "12:00", waveHeight: 5.2, swellDirection: "WNW", windSpeed: 9, windDirection: "SW" },
+    { time: "18:00", waveHeight: 4.7, swellDirection: "W", windSpeed: 7, windDirection: "SE" },
+  ],
+  "constitucion-los-gringos": [
+    { time: "06:00", waveHeight: 2.8, swellDirection: "S", windSpeed: 5, windDirection: "NE" },
+    { time: "12:00", waveHeight: 3.4, swellDirection: "SSE", windSpeed: 11, windDirection: "NW" },
+    { time: "18:00", waveHeight: 3.1, swellDirection: "S", windSpeed: 6, windDirection: "N" },
+  ],
+};
+
+const userFavorites: UserFavorite[] = [
+  { userId: "demo-user", spotId: "pichilemu-punta-de-lobos" },
+  { userId: "demo-user", spotId: "constitucion-los-gringos" },
 ];
 
 export function getSurfSpots(): SurfSpot[] {
@@ -54,5 +62,10 @@ export function getSurfSpotById(spotId: string): SurfSpot | undefined {
 }
 
 export function getFavoriteSpots(): SurfSpot[] {
-  return surfSpots.filter((spot) => spot.isFavorite);
+  const favoriteSpotIds = new Set(userFavorites.filter((favorite) => favorite.userId === "demo-user").map((favorite) => favorite.spotId));
+  return surfSpots.filter((spot) => favoriteSpotIds.has(spot.id));
+}
+
+export function getWaveForecastBySpotId(spotId: string): WaveForecast[] {
+  return waveForecastBySpotId[spotId] ?? [];
 }

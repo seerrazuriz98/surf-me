@@ -1,7 +1,7 @@
-import type { Forecast } from "@/types/surf";
+import type { WaveForecast } from "@/types/surf";
 
 interface ForecastListProps {
-  forecast: Forecast[];
+  forecast: WaveForecast[];
 }
 
 export function ForecastList({ forecast }: ForecastListProps) {
@@ -14,17 +14,17 @@ export function ForecastList({ forecast }: ForecastListProps) {
             <th className="px-4 py-3 font-semibold">Wave (ft)</th>
             <th className="px-4 py-3 font-semibold">Swell</th>
             <th className="px-4 py-3 font-semibold">Wind (kts)</th>
-            <th className="px-4 py-3 font-semibold">Tide</th>
+            <th className="px-4 py-3 font-semibold">Wind direction</th>
           </tr>
         </thead>
         <tbody>
           {forecast.map((entry) => (
-            <tr key={entry.hour} className="border-t border-slate-100 text-slate-700">
-              <td className="px-4 py-3">{entry.hour}</td>
-              <td className="px-4 py-3">{entry.waveHeightFt.toFixed(1)}</td>
+            <tr key={entry.time} className="border-t border-slate-100 text-slate-700">
+              <td className="px-4 py-3">{entry.time}</td>
+              <td className="px-4 py-3">{entry.waveHeight.toFixed(1)}</td>
               <td className="px-4 py-3">{entry.swellDirection}</td>
-              <td className="px-4 py-3">{entry.windKts}</td>
-              <td className="px-4 py-3 capitalize">{entry.tide}</td>
+              <td className="px-4 py-3">{entry.windSpeed}</td>
+              <td className="px-4 py-3">{entry.windDirection}</td>
             </tr>
           ))}
         </tbody>

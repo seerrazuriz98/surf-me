@@ -16,7 +16,7 @@ export function SpotsMap({ spots }: SpotsMapProps) {
           <div key={spot.id} className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
             <p className="font-semibold text-slate-900">{spot.name}</p>
             <p>
-              {spot.coordinates.lat}, {spot.coordinates.lng}
+              {spot.latitude}, {spot.longitude}
             </p>
           </div>
         ))}
