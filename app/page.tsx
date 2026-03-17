@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SurfMapShell } from "@/components/surf-map-shell";
-import { SpotCard } from "@/components/spot-card";
+import { SpotCard } from "@/components/SpotCard";
 import { getSurfSpots } from "@/lib/surf-data";
 
 export default function HomePage() {
