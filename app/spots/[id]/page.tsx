@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
+import { FavoriteToggleButton } from "@/components/FavoriteToggleButton";
 import { ForecastList } from "@/components/forecast-list";
 import { WaveChart } from "@/components/WaveChart";
 import { getSurfSpotById, getWaveForecastBySpotId } from "@/lib/surf-data";
@@ -63,6 +64,7 @@ export default async function SpotDetailPage({ params }: SpotDetailPageProps) {
         <p className="text-sm uppercase tracking-[0.15em] text-slate-500">{spot.country}</p>
         <h1 className="mt-2 text-3xl font-bold text-slate-900">{spot.name}</h1>
         <p className="mt-2 text-slate-700">{spot.description}</p>
+        <FavoriteToggleButton spotId={spot.id} />
         <div className="mt-4 flex flex-wrap gap-3 text-sm text-slate-700">
           <span className="rounded-full bg-slate-100 px-3 py-1">Difficulty: {spot.difficulty}</span>
           <span className="rounded-full bg-slate-100 px-3 py-1">
