@@ -2,6 +2,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { ForecastList } from "@/components/forecast-list";
+import { WaveChart } from "@/components/WaveChart";
 import { getSurfSpotById, getWaveForecastBySpotId } from "@/lib/surf-data";
 import type { SurfSpot, WaveForecast } from "@/types/surf";
 
@@ -32,29 +33,6 @@ async function getSpotForecast(spot: SurfSpot): Promise<WaveForecast[]> {
   }
 
   return body.data;
-}
-
-function WaveChart({ forecast }: { forecast: WaveForecast[] }) {
-  const maxWaveHeight = Math.max(...forecast.map((entry) => entry.waveHeight), 1);
-
-  return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-slate-500">Wave chart</h3>
-      <div className="mt-4 flex h-44 items-end gap-4">
-        {forecast.map((entry) => (
-          <div key={entry.time} className="flex flex-1 flex-col items-center gap-2">
-            <div className="flex h-32 w-full items-end rounded-md bg-slate-100 p-1">
-              <div
-                className="w-full rounded bg-cyan-600"
-                style={{ height: `${(entry.waveHeight / maxWaveHeight) * 100}%` }}
-              />
-            </div>
-            <p className="text-xs font-medium text-slate-600">{entry.time}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 }
 
 export default async function SpotDetailPage({ params }: SpotDetailPageProps) {
