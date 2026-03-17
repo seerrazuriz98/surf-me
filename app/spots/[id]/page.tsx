@@ -21,7 +21,7 @@ async function getSpotForecast(spot: SurfSpot): Promise<WaveForecast[]> {
   const protocol = requestHeaders.get("x-forwarded-proto") ?? "http";
   const baseUrl = host ? `${protocol}://${host}` : "http://localhost:3000";
   const response = await fetch(`${baseUrl}/api/forecast?lat=${spot.latitude}&lon=${spot.longitude}`, {
-    cache: "no-store",
+    next: { revalidate: 600 },
   });
 
   if (!response.ok) {

@@ -128,6 +128,9 @@ export async function getSurfForecast(lat: number, lon: number): Promise<WaveFor
       headers: {
         Accept: "application/json",
       },
+      next: {
+        revalidate: 600,
+      },
     });
   } catch (error) {
     throw new SurfForecastError("UPSTREAM_ERROR", `Failed to fetch marine forecast: ${error instanceof Error ? error.message : "unknown error"}`);

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getSurfForecast, SurfForecastError } from "@/lib/forecast";
 
+export const revalidate = 600;
+
 function parseCoordinate(value: string | null, label: "lat" | "lon"): number {
   if (value === null || value.trim() === "") {
     throw new SurfForecastError("VALIDATION_ERROR", `Missing required query parameter: ${label}`);
@@ -34,6 +36,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({
       data: forecast,
+    }, {
+      headers: {
+        "Cache-Control": "public, s-maxage=600, stale-while-revalidate=300",
+      },
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unexpected error while fetching forecast";
@@ -45,6 +51,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         },
         {
           status: 400,
+          headers: {
+            "Cache-Control": "no-store",
+          },
         },
       );
     }
@@ -56,6 +65,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         },
         {
           status: 502,
+          headers: {
+            "Cache-Control": "no-store",
+          },
         },
       );
     }
@@ -66,6 +78,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
       {
         status: 500,
+        headers: {
+          "Cache-Control": "no-store",
+        },
       },
     );
   }
